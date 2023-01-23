@@ -1,0 +1,7 @@
+#topWindowTollbar {
+    background-color: aqua;
+};
+
+.tolltip_bar_buttons {
+    z-index: 500;
+}

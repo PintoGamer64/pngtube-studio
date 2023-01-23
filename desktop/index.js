@@ -8,6 +8,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 900,
         height: 680,
+        titleBarStyle: 'hidden',
         webPreferences: {
             nodeIntegration: true,
             preload: join(__dirname, './preloads/mainProcess.js')
@@ -36,7 +37,16 @@ app.on('activate', () => {
     }
 });
 
-//Events
-ipcMain.on('CloseWindow', () => {
-    app.quit();
+//Window Events
+ipcMain.on('window', () => {
+    if (mainWindow.isMaximized()) {
+        return mainWindow.unmaximize();
+    }
+    return mainWindow.maximize();
 })
+ipcMain.on('minimize', () => {
+    mainWindow.minimize();
+})
+ipcMain.on('close', () => {
+    app.quit();
+});

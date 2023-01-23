@@ -1,12 +1,12 @@
 const { ipcRenderer, contextBridge } = require('electron');
 
-function close_window() {
-    ipcRenderer.send('CloseWindow');
+function EventWindow(typeEvent = 'minimize' || 'close' || 'window') {
+    ipcRenderer.send(typeEvent);
 }
 
 contextBridge.exposeInMainWorld(
     'pngtubeProcess',
     {
-        close_window
+        EventWindow
     }
 );
