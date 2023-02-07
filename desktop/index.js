@@ -1,6 +1,21 @@
+// Node Modules
 const { app, BrowserWindow, ipcMain } = require('electron');
 const isDev = require('electron-is-dev');
 const { join } = require('path');
+
+// Import Classes
+const { InitProcess } = require('./init');
+
+// Initialize
+const { __Init__ } = InitProcess();
+
+// Executions
+__Init__();
+
+const appBackground = require('C:/Users/Joan Cardozoç/AppData/Roaming/PNGtubeSettings/settings.json').appBackground.wallpaper;
+const pathBackgrounds = require('C:/Users/Joan Cardozoç/AppData/Roaming/PNGtubeSettings/settings.json').wallpapersPath;
+const URLcomplete = join(pathBackgrounds, `${appBackground}.jpg`);
+console.log(URLcomplete);
 
 let mainWindow;
 
@@ -8,8 +23,9 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 900,
         height: 680,
-        titleBarStyle: 'hidden',
+        //titleBarStyle: 'hidden',
         webPreferences: {
+            images: true,
             devTools: true,
             nodeIntegration: true,
             preload: join(__dirname, './preloads/mainProcess.js')
@@ -17,6 +33,8 @@ function createWindow() {
     });
     mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${join(__dirname, '../build/index.html')}`);
     mainWindow.on('closed', () => mainWindow = null);
+
+    mainWindow.webContents.send('ping', { image: URLcomplete })
 }
 
 app.on('ready', createWindow);
@@ -48,6 +66,6 @@ ipcMain.on('close', () => {
 });
 
 //Settings Events
-ipcMain.on('disableHardwareAceleration', () => {
-
+ipcMain.on('disableHardwareAceleration', (event, { state }) => {
+    
 })

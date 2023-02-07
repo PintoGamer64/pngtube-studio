@@ -5,6 +5,11 @@ import './App.css';
 import TopWindow from './components/topWindow/topWindow';
 
 function App() {
+
+  window.pngtubeProcess.BackgroundImage((responce) => {
+    console.log(responce)
+  });
+
   return (
     <div className="App">
       <TopWindow />

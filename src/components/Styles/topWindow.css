@@ -1,5 +1,6 @@
 #topBar {
-    background-color: #00000050;
+    background-color: #ffffff;
+    border-bottom: 2px solid #000000;
 }
 
 #topWindowTollbar {
